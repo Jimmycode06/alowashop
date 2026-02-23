@@ -480,7 +480,7 @@ export default function ProductPage() {
             
             {/* Payment Methods */}
             <div className="mb-6">
-              <div className="flex items-center justify-center -space-x-2 flex-wrap">
+              <div className="flex items-center justify-center -space-x-6 flex-wrap">
                 {['Visa', 'Mastercard', 'PayPal', 'ApplePay', 'GooglePay'].map((payment) => (
                   <PaymentLogo key={payment} name={payment} />
                 ))}
