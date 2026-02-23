@@ -38,8 +38,8 @@ export default function ProductPage() {
 
   // Product images - replace these paths with your actual images
   const productImages = [
-    '/images/ring-1.jpg',  // Main product image
-    '/images/ring-2.jpg',  // Side view
+    '/images/ring-1.png',  // Main product image
+    '/images/ring-2.png',  // Side view
     '/images/ring-3.jpg',  // Detail view
     '/images/ring-4.jpg',  // Lifestyle/on hand
   ]
