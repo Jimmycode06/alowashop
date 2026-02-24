@@ -725,7 +725,7 @@ export default function ProductPage() {
               rating: 5,
               comment: 'Great quality and the magnetic therapy really works.',
               color: 'Silver',
-              image: '/images/review-2.jpg',
+              image: '',
             },
             {
               name: 'Emma L.',
@@ -734,8 +734,7 @@ export default function ProductPage() {
               rating: 4,
               comment: 'Nice design, very discreet. Helps with circulation.',
               color: 'Onyx',
-              image: '/images/review-3.jpg',
-              lifestyleImage: '/images/review-lifestyle-2.jpg',
+              image: '',
             },
             {
               name: 'David K.',
@@ -744,7 +743,7 @@ export default function ProductPage() {
               rating: 5,
               comment: 'Excellent product, exceeded my expectations.',
               color: 'Gold',
-              image: '/images/review-4.jpg',
+              image: '',
             },
             {
               name: 'Lisa P.',
@@ -753,8 +752,7 @@ export default function ProductPage() {
               rating: 4,
               comment: 'Adjustable size fits perfectly. Very comfortable.',
               color: 'Silver',
-              image: '/images/review-5.jpg',
-              lifestyleImage: '/images/review-lifestyle-3.jpg',
+              image: '',
             },
             {
               name: 'James T.',
@@ -763,7 +761,7 @@ export default function ProductPage() {
               rating: 5,
               comment: 'Best purchase I made this year. Highly recommend!',
               color: 'Rose Gold',
-              image: '/images/review-6.jpg',
+              image: '',
             },
           ].map((review, index) => (
             <div key={index} className="bg-white rounded-lg border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
@@ -812,13 +810,13 @@ export default function ProductPage() {
               {/* Comment */}
               <p className="text-sm text-gray-700 mb-4 leading-relaxed">{review.comment}</p>
 
-              {/* Lifestyle Image - carré sous le commentaire */}
+              {/* Photo lifestyle (petite, seulement quand présente) */}
               {review.lifestyleImage && (
-                <div className="mb-4 rounded-lg overflow-hidden bg-gray-100 w-full">
+                <div className="mb-3 flex justify-start">
                   <img
                     src={review.lifestyleImage}
                     alt={`${review.name} - photo`}
-                    className="block w-full aspect-square object-cover"
+                    className="block w-32 h-32 rounded-lg object-cover border border-gray-200 shadow-sm"
                   />
                 </div>
               )}
