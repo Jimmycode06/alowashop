@@ -160,7 +160,7 @@ export default function Home() {
                 title: 'Life Changer'
               },
               {
-                name: 'Michael R.',
+                name: 'Marie R.',
                 location: 'Texas',
                 age: '38',
                 rating: 5,

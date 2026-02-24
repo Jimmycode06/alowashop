@@ -20,6 +20,7 @@ export default function ProductPage() {
   const [openColorSelect1, setOpenColorSelect1] = useState(false)
   const [openColorSelect2, setOpenColorSelect2] = useState(false)
   const [openColorSelectSingle, setOpenColorSelectSingle] = useState(false)
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
   const { addToCart, setIsCartOpen } = useCart()
   
   // Close dropdowns when clicking outside
@@ -36,12 +37,23 @@ export default function ProductPage() {
     }
   }, [openColorSelect1, openColorSelect2, openColorSelectSingle])
 
+  // Fermer la lightbox avec Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxImage(null)
+    }
+    if (lightboxImage) {
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
+    }
+  }, [lightboxImage])
+
   // Product images - replace these paths with your actual images
   const productImages = [
     '/images/ring-1.png',  // Main product image
     '/images/ring-2.png',  // Side view
     '/images/ring-3.png',  // Detail view
-    '/images/ring-4.jpg',  // Lifestyle/on hand
+    '/images/ring-4.png',  // Lifestyle/on hand
   ]
 
   const product = {
@@ -719,13 +731,14 @@ export default function ProductPage() {
               lifestyleImage: '/images/sarah.png',
             },
             {
-              name: 'Michael R.',
+              name: 'Marie R.',
               verified: true,
               date: '24/01/2025',
               rating: 5,
               comment: 'Great quality and the magnetic therapy really works.',
-              color: 'Silver',
+              color: 'Rose Gold',
               image: '',
+              lifestyleImage: '/images/marie.png',
             },
             {
               name: 'Emma L.',
@@ -737,7 +750,7 @@ export default function ProductPage() {
               image: '',
             },
             {
-              name: 'David K.',
+              name: 'Sophie K.',
               verified: true,
               date: '22/01/2025',
               rating: 5,
@@ -755,7 +768,7 @@ export default function ProductPage() {
               image: '',
             },
             {
-              name: 'James T.',
+              name: 'Julie T.',
               verified: true,
               date: '20/01/2025',
               rating: 5,
@@ -810,14 +823,20 @@ export default function ProductPage() {
               {/* Comment */}
               <p className="text-sm text-gray-700 mb-4 leading-relaxed">{review.comment}</p>
 
-              {/* Photo lifestyle (petite, seulement quand présente) */}
+              {/* Photo lifestyle (petite, clic pour agrandir) */}
               {review.lifestyleImage && (
                 <div className="mb-3 flex justify-start">
-                  <img
-                    src={review.lifestyleImage}
-                    alt={`${review.name} - photo`}
-                    className="block w-32 h-32 rounded-lg object-cover border border-gray-200 shadow-sm"
-                  />
+                  <button
+                    type="button"
+                    onClick={() => setLightboxImage(review.lifestyleImage!)}
+                    className="block w-32 h-32 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  >
+                    <img
+                      src={review.lifestyleImage}
+                      alt={`${review.name} - photo`}
+                      className="block w-full h-full object-cover"
+                    />
+                  </button>
                 </div>
               )}
 
@@ -829,6 +848,35 @@ export default function ProductPage() {
           ))}
         </div>
       </div>
+
+      {/* Lightbox : clic sur une photo d'avis pour agrandir */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setLightboxImage(null)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Escape' && setLightboxImage(null)}
+          aria-label="Fermer"
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxImage(null)}
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors focus:outline-none"
+            aria-label="Fermer"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <img
+            src={lightboxImage}
+            alt="Agrandissement"
+            className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   )
 }
