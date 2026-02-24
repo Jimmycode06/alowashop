@@ -194,12 +194,8 @@ export default function Home() {
                   {testimonial.text}
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
-                    {testimonial.image ? (
-                      <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="w-full h-full flex items-center justify-center text-gray-700 font-semibold text-base">{testimonial.name.charAt(0)}</span>
-                    )}
+                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-700 font-semibold text-base">{testimonial.name.charAt(0)}</span>
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">{testimonial.name}</p>
