@@ -55,6 +55,7 @@ export default function ProductPage() {
     '/images/ring-3.png',  // Detail view
     '/images/ring-4.png',  // Lifestyle/on hand
     '/images/ring-5.png',  // Extra view
+    '/images/ring-6.png',  // Extra view
   ]
 
   const product = {
@@ -72,7 +73,7 @@ export default function ProductPage() {
     features: [
       'Therapeutic grade neodymium magnets',
       'Adjustable size for comfortable fit',
-      'Hypoallergenic ice construction',
+      'Hypoallergenic stainless steel construction',
       'Water-resistant design',
       '30-day money-back guarantee',
       'Free shipping in the US',
@@ -86,7 +87,7 @@ export default function ProductPage() {
       'Safe for daily wear',
     ],
     specifications: {
-      material: 'Ice with Neodymium Magnets',
+      material: 'Stainless steel with Neodymium Magnets',
       weight: '5.2g',
       thickness: '1.3mm',
       magnets: '4 therapeutic grade magnets',
@@ -107,16 +108,27 @@ export default function ProductPage() {
     return product.singlePrice * quantity
   }
 
+  // Image du ring selon la couleur (pour panier / checkout)
+  const getImageForColor = (color: string) => {
+    const map: Record<string, string> = {
+      gold: '/images/ring-4.png',
+      silver: '/images/ring-6.png',
+      'rose-gold': '/images/ring-2.png',
+      onyx: '/images/ring-5.png',
+    }
+    return map[color] ?? '/images/ring-1.png'
+  }
+
   const handleAddToCart = () => {
     if (bundleOption === 'bogo') {
       // Add 2 rings with selected colors - one paid, one free
-      // Use unique IDs to ensure they are separate items
       addToCart({
         id: `${product.id}-bogo-1`,
         name: product.name,
         price: product.singlePrice,
         quantity: 1,
         color: selectedColorBogo.ring1,
+        image: getImageForColor(selectedColorBogo.ring1),
       })
       addToCart({
         id: `${product.id}-bogo-2-free`,
@@ -124,6 +136,7 @@ export default function ProductPage() {
         price: 0, // Free ring
         quantity: 1,
         color: selectedColorBogo.ring2,
+        image: getImageForColor(selectedColorBogo.ring2),
       })
     } else {
       for (let i = 0; i < quantity; i++) {
@@ -133,6 +146,7 @@ export default function ProductPage() {
           price: product.singlePrice,
           quantity: 1,
           color: selectedColor,
+          image: getImageForColor(selectedColor),
         })
       }
     }
@@ -600,7 +614,7 @@ export default function ProductPage() {
               { q: 'Is magnetotherapy safe?', a: 'Yes, magnetotherapy is generally safe for most people. However, if you have a pacemaker or other implanted medical devices, please consult your doctor before using magnetic products.' },
             ] :
             faqCategory === 'product' ? [
-              { q: 'What materials are used in the ALOWA ring?', a: 'The ALOWA ring is made from premium ice with therapeutic-grade neodymium magnets. The ice construction is hypoallergenic, lightweight, and durable.' },
+              { q: 'What materials are used in the ALOWA ring?', a: 'The ALOWA ring is made from premium stainless steel with therapeutic-grade neodymium magnets. The stainless steel construction is hypoallergenic, lightweight, and durable.' },
               { q: 'How do I adjust the ring size?', a: 'The ALOWA ring is designed to be adjustable and fits all finger sizes. Simply bend the ring gently to fit your finger comfortably. It\'s suitable for both men and women.' },
               { q: 'Can I wear the ring while swimming or showering?', a: 'Yes! The ALOWA ring is water-resistant and can be worn during daily activities including swimming and showering. However, we recommend removing it during intense physical activities to prevent damage.' },
               { q: 'How long should I wear the ring?', a: 'You can wear the ALOWA ring all day long for continuous benefits. Many users find it comfortable to wear 24/7, but you can also wear it during specific times when you need pain relief.' },
@@ -673,7 +687,7 @@ export default function ProductPage() {
             {/* Rows */}
             {[
               { feature: 'Immediate therapeutic effect', alowa: true, others: false },
-              { feature: 'Premium ice construction', alowa: true, others: false },
+              { feature: 'Premium stainless steel construction', alowa: true, others: false },
               { feature: 'Adjustable size - fits all fingers', alowa: true, others: false },
               { feature: 'Hypoallergenic & lightweight', alowa: true, others: false },
               { feature: 'Water-resistant design', alowa: true, others: false },

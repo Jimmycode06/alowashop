@@ -247,7 +247,7 @@ export default function CheckoutPage() {
                   <div className="flex-1">
                     <p className="font-medium text-gray-900">{item.name}</p>
                     <div className="text-sm text-gray-600">
-                      {item.color && <span>Color: <span className="capitalize">{item.color}</span></span>}
+                      {item.color && <span>Color: <span className="capitalize">{item.color.replace('-', ' ')}</span></span>}
                       <span className={item.color ? ' ml-2' : ''}>Adjustable size</span>
                       <span> × {item.quantity}</span>
                     </div>
