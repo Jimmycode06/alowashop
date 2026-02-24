@@ -157,7 +157,8 @@ export default function Home() {
                 age: '42',
                 rating: 5,
                 text: '"This ring has been a game-changer for my arthritis pain. I wear it daily and notice a significant difference. ALOWA has truly improved my quality of life!"',
-                title: 'Life Changer'
+                title: 'Life Changer',
+                image: '/images/sarah.png'
               },
               {
                 name: 'Michael R.',
@@ -194,8 +195,12 @@ export default function Home() {
                   {testimonial.text}
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-semibold text-base">
-                    {testimonial.name.charAt(0)}
+                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200 relative">
+                    {testimonial.image ? (
+                      <Image src={testimonial.image} alt={testimonial.name} fill className="object-cover" />
+                    ) : (
+                      <span className="absolute inset-0 flex items-center justify-center text-gray-700 font-semibold text-base">{testimonial.name.charAt(0)}</span>
+                    )}
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">{testimonial.name}</p>

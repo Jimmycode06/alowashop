@@ -715,7 +715,7 @@ export default function ProductPage() {
               rating: 5,
               comment: 'Comfortable to wear all day, really helps with my joint pain.',
               color: 'Gold',
-              image: '/images/review-1.jpg',
+              image: '/images/sarah.png',
               lifestyleImage: '/images/review-lifestyle-1.jpg',
             },
             {
