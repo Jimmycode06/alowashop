@@ -40,7 +40,7 @@ export default function ProductPage() {
   const productImages = [
     '/images/ring-1.png',  // Main product image
     '/images/ring-2.png',  // Side view
-    '/images/ring-3.jpg',  // Detail view
+    '/images/ring-3.png',  // Detail view
     '/images/ring-4.jpg',  // Lifestyle/on hand
   ]
 

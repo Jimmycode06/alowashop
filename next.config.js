@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: false,
+    unoptimized: true, // nécessaire pour que les images s'affichent sur tous les hébergeurs (Vercel, Netlify, etc.)
   },
 }
 
