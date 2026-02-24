@@ -30,10 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${cormorant.variable} font-sans`}>
+      <body className={`${inter.variable} ${cormorant.variable} font-sans overflow-x-hidden`}>
         <CartProvider>
           <Header />
-          <main className="min-h-screen">
+          <main className="min-h-screen overflow-x-hidden">
             {children}
           </main>
           <Footer />

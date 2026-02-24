@@ -32,37 +32,38 @@ export default function CartPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+    <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 overflow-x-hidden">
+      <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Shopping Cart</h1>
       
       <div className="grid md:grid-cols-3 gap-8">
         {/* Cart Items */}
         <div className="md:col-span-2">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 divide-y">
             {cart.map((item) => (
-              <div key={`${item.id}-${item.color || 'default'}`} className="p-6 flex gap-6">
-                <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                  {item.image ? (
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <svg className="w-12 h-12 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                  )}
-                </div>
-                
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{item.name}</h3>
-                  <div className="mb-2">
-                    {item.color && (
-                      <p className="text-gray-600">Color: <span className="font-semibold capitalize">{item.color}</span></p>
+              <div key={`${item.id}-${item.color || 'default'}`} className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6">
+                <div className="flex gap-4 sm:gap-6 flex-1 min-w-0">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                    {item.image ? (
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <svg className="w-10 h-10 sm:w-12 sm:h-12 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                      </svg>
                     )}
-                    <p className="text-sm text-gray-500 mt-1">Adjustable size - fits all fingers</p>
                   </div>
-                  <p className="text-2xl font-bold text-primary-600">${item.price.toFixed(2)}</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1 truncate">{item.name}</h3>
+                    <div className="mb-2">
+                      {item.color && (
+                        <p className="text-gray-600 text-sm sm:text-base">Color: <span className="font-semibold capitalize">{item.color.replace('-', ' ')}</span></p>
+                      )}
+                      <p className="text-xs sm:text-sm text-gray-500 mt-1">Adjustable size - fits all fingers</p>
+                    </div>
+                    <p className="text-xl sm:text-2xl font-bold text-primary-600">${item.price.toFixed(2)}</p>
+                  </div>
                 </div>
 
-                <div className="flex flex-col items-end gap-4">
+                <div className="flex flex-row sm:flex-col items-center justify-between sm:items-end gap-4 border-t sm:border-t-0 pt-4 sm:pt-0">
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1), item.color)}

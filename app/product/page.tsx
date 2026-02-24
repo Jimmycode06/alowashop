@@ -155,10 +155,10 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <div className="grid md:grid-cols-2 gap-16 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-4 py-12 overflow-x-hidden">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-16 animate-fade-in">
         {/* Product Image */}
-        <div className="relative">
+        <div className="relative min-w-0">
           <div className="aspect-square bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden group relative">
             {/* Main Product Image */}
             {!imageError[selectedImageIndex] ? (
@@ -192,13 +192,13 @@ export default function ProductPage() {
             )}
           </div>
           
-          {/* Image Thumbnails */}
-          <div className="mt-6 flex gap-3">
+          {/* Image Thumbnails - défilement horizontal sur mobile */}
+          <div className="mt-6 flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 md:overflow-visible md:flex-wrap">
             {productImages.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImageIndex(index)}
-                className={`relative w-24 h-24 rounded-xl border-2 overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer ${
+                className={`relative w-16 h-16 md:w-24 md:h-24 rounded-xl border-2 overflow-hidden transition-all duration-300 hover:scale-110 cursor-pointer flex-shrink-0 ${
                   selectedImageIndex === index
                     ? 'border-primary-600 shadow-lg ring-2 ring-primary-200'
                     : 'border-gray-200 hover:border-primary-300'
@@ -227,7 +227,7 @@ export default function ProductPage() {
         </div>
 
         {/* Product Details */}
-        <div className="animate-slide-up">
+        <div className="animate-slide-up min-w-0">
           {/* Badge and Rating */}
           <div className="flex items-center gap-4 mb-4">
             <span className="text-sm text-gray-600">🇺🇸 Proud USA brand</span>
@@ -263,7 +263,7 @@ export default function ProductPage() {
             </li>
           </ul>
 
-          <h1 className="text-4xl font-display font-normal text-gray-900 mb-8 leading-tight tracking-wide uppercase">
+          <h1 className="text-2xl sm:text-4xl font-display font-normal text-gray-900 mb-6 sm:mb-8 leading-tight tracking-wide uppercase">
             {product.name}
           </h1>
           
@@ -496,18 +496,18 @@ export default function ProductPage() {
           <div className="mb-6">
             <button
               onClick={handleAddToCart}
-              className="w-full bg-black text-white py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 transition-colors mb-4 shadow-lg flex items-center justify-between px-6"
+              className="w-full bg-black text-white py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-800 transition-colors mb-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-2 px-4 sm:px-6"
             >
               <span>ADD TO CART</span>
               <div className="flex items-center gap-3">
                 <span className="text-gray-400 line-through text-sm">${bundleOption === 'bogo' ? (product.singlePrice * 2).toFixed(2) : (product.originalPrice * quantity).toFixed(2)}</span>
-                <span className="text-2xl font-bold">${getTotalPrice().toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold">${getTotalPrice().toFixed(2)}</span>
               </div>
             </button>
             
             {/* Payment Methods */}
-            <div className="mb-6">
-              <div className="flex items-center justify-center -space-x-6 flex-wrap">
+            <div className="mb-6 overflow-x-hidden">
+              <div className="flex items-center justify-center gap-2 sm:-space-x-6 sm:gap-0 flex-wrap">
                 {['Visa', 'Mastercard', 'PayPal', 'ApplePay', 'GooglePay'].map((payment) => (
                   <PaymentLogo key={payment} name={payment} />
                 ))}
@@ -582,7 +582,7 @@ export default function ProductPage() {
         </div>
 
         {/* FAQ Category Tabs */}
-        <div className="flex gap-3 mb-8 justify-center">
+        <div className="flex flex-wrap gap-2 sm:gap-3 mb-8 justify-center">
           {[
             { id: 'general', label: 'General Information' },
             { id: 'product', label: 'Product Information' },
@@ -594,7 +594,7 @@ export default function ProductPage() {
                 setFaqCategory(category.id)
                 setOpenFaqIndex(null)
               }}
-              className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                 faqCategory === category.id
                   ? 'bg-primary-600 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'

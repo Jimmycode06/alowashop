@@ -61,8 +61,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">Checkout</h1>
+    <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 overflow-x-hidden">
+      <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">Checkout</h1>
       
       <div className="grid md:grid-cols-3 gap-8">
         {/* Checkout Form */}
