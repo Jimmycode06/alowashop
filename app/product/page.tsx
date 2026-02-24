@@ -54,6 +54,7 @@ export default function ProductPage() {
     '/images/ring-2.png',  // Side view
     '/images/ring-3.png',  // Detail view
     '/images/ring-4.png',  // Lifestyle/on hand
+    '/images/ring-5.png',  // Extra view
   ]
 
   const product = {
