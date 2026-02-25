@@ -21,8 +21,25 @@ export default function ProductPage() {
   const [openColorSelect2, setOpenColorSelect2] = useState(false)
   const [openColorSelectSingle, setOpenColorSelectSingle] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const swipeStartX = useRef<number | null>(null)
   const { addToCart, setIsCartOpen } = useCart()
-  
+
+  // Swipe / glisser pour changer d'image (mobile et desktop)
+  const handleSwipeStart = (clientX: number) => {
+    swipeStartX.current = clientX
+  }
+  const handleSwipeEnd = (clientX: number, imageCount: number) => {
+    if (swipeStartX.current === null) return
+    const delta = clientX - swipeStartX.current
+    const threshold = 50
+    if (delta > threshold) {
+      setSelectedImageIndex((i) => (i <= 0 ? imageCount - 1 : i - 1))
+    } else if (delta < -threshold) {
+      setSelectedImageIndex((i) => (i >= imageCount - 1 ? 0 : i + 1))
+    }
+    swipeStartX.current = null
+  }
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -159,15 +176,25 @@ export default function ProductPage() {
       <div className="grid md:grid-cols-2 gap-8 md:gap-16 animate-fade-in">
         {/* Product Image */}
         <div className="relative min-w-0">
-          <div className="aspect-square bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden group relative">
+          <div
+            className="aspect-square bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden group relative touch-pan-y select-none cursor-grab active:cursor-grabbing"
+            role="region"
+            aria-label="Galerie produit - glisser pour changer d'image"
+            onTouchStart={(e) => handleSwipeStart(e.touches[0]?.clientX ?? 0)}
+            onTouchEnd={(e) => handleSwipeEnd(e.changedTouches[0]?.clientX ?? 0, productImages.length)}
+            onMouseDown={(e) => handleSwipeStart(e.clientX)}
+            onMouseUp={(e) => handleSwipeEnd(e.clientX, productImages.length)}
+            onMouseLeave={() => { swipeStartX.current = null }}
+          >
             {/* Main Product Image */}
             {!imageError[selectedImageIndex] ? (
               <Image
                 src={productImages[selectedImageIndex]}
                 alt={`${product.name} - Image ${selectedImageIndex + 1}`}
                 fill
-                className="object-cover z-10"
+                className="object-cover z-10 pointer-events-none"
                 priority={selectedImageIndex === 0}
+                draggable={false}
                 onError={() => {
                   setImageError(prev => {
                     const newErrors = [...prev]
