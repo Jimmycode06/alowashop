@@ -22,20 +22,22 @@ export default function ProductPage() {
   const [openColorSelectSingle, setOpenColorSelectSingle] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
   const swipeStartX = useRef<number | null>(null)
+  const galleryLengthRef = useRef(7)
   const { addToCart, setIsCartOpen } = useCart()
 
   // Swipe / glisser pour changer d'image (mobile et desktop)
   const handleSwipeStart = (clientX: number) => {
     swipeStartX.current = clientX
   }
-  const handleSwipeEnd = (clientX: number, imageCount: number) => {
-    if (swipeStartX.current === null) return
+  const handleSwipeEnd = (clientX: number, imageCount?: number) => {
+    const count = imageCount ?? galleryLengthRef.current
+    if (swipeStartX.current === null || count <= 0) return
     const delta = clientX - swipeStartX.current
-    const threshold = 50
+    const threshold = 40
     if (delta > threshold) {
-      setSelectedImageIndex((i) => (i <= 0 ? imageCount - 1 : i - 1))
+      setSelectedImageIndex((i) => (i <= 0 ? count - 1 : i - 1))
     } else if (delta < -threshold) {
-      setSelectedImageIndex((i) => (i >= imageCount - 1 ? 0 : i + 1))
+      setSelectedImageIndex((i) => (i >= count - 1 ? 0 : i + 1))
     }
     swipeStartX.current = null
   }
@@ -65,6 +67,17 @@ export default function ProductPage() {
     }
   }, [lightboxImage])
 
+  // Mouseup global : capter la fin du swipe même si la souris quitte la zone
+  useEffect(() => {
+    const onMouseUp = (e: MouseEvent) => {
+      if (swipeStartX.current !== null) {
+        handleSwipeEnd(e.clientX)
+      }
+    }
+    document.addEventListener('mouseup', onMouseUp)
+    return () => document.removeEventListener('mouseup', onMouseUp)
+  }, [])
+
   // Product images
   const productImages = [
     '/images/ring-1.png',
@@ -75,6 +88,8 @@ export default function ProductPage() {
     '/images/ring-5.png',
     '/images/ring-6.png',
   ]
+  galleryLengthRef.current = productImages.length
+
   const product = {
     id: 'magnetic-ring-001',
     name: 'ALOWA Magnetic Therapy Ring',
@@ -177,13 +192,21 @@ export default function ProductPage() {
         {/* Product Image */}
         <div className="relative min-w-0">
           <div
-            className="aspect-square bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden group relative touch-pan-y select-none cursor-grab active:cursor-grabbing"
+            className="aspect-square bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden group relative select-none cursor-grab active:cursor-grabbing touch-none"
             role="region"
             aria-label="Galerie produit - glisser pour changer d'image"
-            onTouchStart={(e) => handleSwipeStart(e.touches[0]?.clientX ?? 0)}
-            onTouchEnd={(e) => handleSwipeEnd(e.changedTouches[0]?.clientX ?? 0, productImages.length)}
-            onMouseDown={(e) => handleSwipeStart(e.clientX)}
-            onMouseUp={(e) => handleSwipeEnd(e.clientX, productImages.length)}
+            onTouchStart={(e) => {
+              const x = e.touches[0]?.clientX ?? 0
+              handleSwipeStart(x)
+            }}
+            onTouchEnd={(e) => {
+              const x = e.changedTouches[0]?.clientX ?? 0
+              handleSwipeEnd(x, productImages.length)
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              handleSwipeStart(e.clientX)
+            }}
             onMouseLeave={() => { swipeStartX.current = null }}
           >
             {/* Main Product Image */}
@@ -206,7 +229,7 @@ export default function ProductPage() {
             ) : null}
             {/* Fallback placeholder if image doesn't exist or failed to load */}
             {(imageError[selectedImageIndex] || !productImages[selectedImageIndex]) && (
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 flex items-center justify-center z-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 flex items-center justify-center z-0 pointer-events-none">
                 <div className="text-center relative z-10">
                   <div className="w-80 h-80 mx-auto bg-gradient-to-br from-white to-primary-50 rounded-full flex items-center justify-center shadow-2xl mb-6 group-hover:scale-110 transition-transform duration-500 animate-float">
                     <svg className="w-40 h-40 text-primary-600 group-hover:rotate-12 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
