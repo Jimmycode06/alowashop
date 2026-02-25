@@ -28,6 +28,11 @@ export default function Footer() {
                   Shopping Cart
                 </Link>
               </li>
+              <li>
+                <Link href="/product-information" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
+                  Product Information
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -35,9 +40,9 @@ export default function Footer() {
             <h4 className="text-white font-bold mb-6 text-lg">Support</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="#" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
-                  Shipping Info
-                </a>
+                <Link href="/shipping-delivery" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
+                  Shipping & Delivery
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
@@ -61,9 +66,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
+                <Link href="/terms-of-service" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
