@@ -48,16 +48,16 @@ export default function ProductPage() {
     }
   }, [lightboxImage])
 
-  // Product images - replace these paths with your actual images
+  // Product images
   const productImages = [
-    '/images/ring-1.png',  // Main product image
-    '/images/ring-2.png',  // Side view
-    '/images/ring-3.png',  // Detail view
-    '/images/ring-4.png',  // Lifestyle/on hand
-    '/images/ring-5.png',  // Extra view
-    '/images/ring-6.png',  // Extra view
+    '/images/ring-1.png',
+    '/images/ring-7.png',
+    '/images/ring-2.png',
+    '/images/ring-3.png',
+    '/images/ring-4.png',
+    '/images/ring-5.png',
+    '/images/ring-6.png',
   ]
-
   const product = {
     id: 'magnetic-ring-001',
     name: 'ALOWA Magnetic Therapy Ring',

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useCart } from '@/contexts/CartContext'
 
 export default function ProductCard() {
@@ -11,6 +12,7 @@ export default function ProductCard() {
     name: 'Premium Magnetic Therapy Ring',
     price: 49.99,
     originalPrice: 79.99,
+    image: '/images/ring-1.png',  // première image de la page produit
   }
 
   const handleAddToCart = () => {
@@ -25,15 +27,14 @@ export default function ProductCard() {
 
   return (
     <div className="group bg-white rounded-3xl shadow-2xl overflow-hidden max-w-sm hover:shadow-glow-lg transition-all duration-500 hover:-translate-y-2">
-      <div className="relative aspect-square bg-gradient-to-br from-primary-100 via-primary-200 to-primary-300 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-transparent"></div>
-        <div className="relative z-10 animate-float">
-          <div className="w-48 h-48 mx-auto bg-gradient-to-br from-white to-primary-50 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-500">
-            <svg className="w-24 h-24 text-primary-600 group-hover:rotate-12 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-            </svg>
-          </div>
-        </div>
+      <div className="relative aspect-square bg-gray-100 overflow-hidden">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          sizes="(max-width: 768px) 100vw, 400px"
+        />
         <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg animate-pulse">
           -38%
         </div>
