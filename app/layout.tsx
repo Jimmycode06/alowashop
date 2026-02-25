@@ -21,6 +21,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'ALOWA - Magnetic Therapy Ring | Natural Pain Relief',
   description: 'Discover the power of magnetotherapy with ALOWA premium magnetic ring. Experience natural pain relief and improved circulation.',
+  icons: {
+    icon: '/images/favicon.png',
+  },
 }
 
 export default function RootLayout({

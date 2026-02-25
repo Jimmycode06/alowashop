@@ -96,11 +96,12 @@ export default function ProductPage() {
     singlePrice: 49.90,
     originalPrice: 79.99,
     description: 'Experience the healing power of magnetotherapy with our premium magnetic ring. This scientifically-designed ring uses therapeutic magnets to improve circulation, reduce inflammation, and provide natural pain relief.',
+    // class = couleur CSS si pas d'image ; image = chemin vers une image (ex: /images/colors/gold.png) pour la pastille
     colors: [
-      { value: 'gold', label: 'Gold', class: 'bg-gradient-to-br from-yellow-300 to-yellow-600', popular: true },
-      { value: 'silver', label: 'Silver', class: 'bg-gradient-to-br from-gray-100 to-gray-300' },
-      { value: 'onyx', label: 'Onyx', class: 'bg-gradient-to-br from-gray-700 to-gray-900' },
-      { value: 'rose-gold', label: 'Rose Gold', class: 'bg-gradient-to-br from-rose-300 to-rose-500' },
+      { value: 'gold', label: 'Gold color', class: 'bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700', image: '/images/gold.png', popular: true },
+      { value: 'silver', label: 'Silver color', class: 'bg-gradient-to-br from-gray-200 to-gray-400', image: '/images/silver.png' },
+      { value: 'onyx', label: 'Onyx color', class: 'bg-gradient-to-br from-gray-700 to-gray-900', image: '/images/onyx.png' },
+      { value: 'rose-gold', label: 'Rose Gold color', class: 'bg-gradient-to-br from-rose-300 to-rose-500', image: '/images/rose.png' },
     ],
     features: [
       'Therapeutic grade neodymium magnets',
@@ -124,6 +125,20 @@ export default function ProductPage() {
       thickness: '1.3mm',
       magnets: '4 therapeutic grade magnets',
     },
+  }
+
+  // Pastille couleur : image si définie (ex: /images/colors/gold.png), sinon dégradé CSS
+  const ColorSwatch = ({ color, sizeClass = 'w-5 h-5' }: { color: { class: string; image?: string } | undefined; sizeClass?: string }) => {
+    if (!color) return <div className={`${sizeClass} rounded-full border-2 border-gray-200 flex-shrink-0 bg-gray-300`} />
+    if (color.image) {
+      return (
+        <div className={`${sizeClass} rounded-full border-2 border-gray-200 flex-shrink-0 overflow-hidden bg-gray-100 relative`}>
+          <img src={color.image} alt="" className="absolute inset-0 w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; const next = e.currentTarget.nextElementSibling as HTMLElement; if (next) next.classList.remove('hidden') }} />
+          <div className={`absolute inset-0 hidden ${color.class}`} />
+        </div>
+      )
+    }
+    return <div className={`${sizeClass} rounded-full border-2 border-gray-200 flex-shrink-0 ${color.class}`} />
   }
 
   const getCurrentPrice = () => {
@@ -364,7 +379,7 @@ export default function ProductPage() {
                           className="w-full text-sm border border-gray-300 rounded px-3 py-2 pl-1 pr-2 bg-white text-left flex items-center justify-between cursor-pointer hover:border-gray-400 transition-colors"
                       >
                         <div className="flex items-center gap-2">
-                          <div className={`w-5 h-5 rounded-full border-2 border-gray-200 flex-shrink-0 ${product.colors.find(c => c.value === selectedColor)?.class || 'bg-gray-300'}`}></div>
+                          <ColorSwatch color={product.colors.find(c => c.value === selectedColor)} />
                           <span className="text-gray-700">{product.colors.find(c => c.value === selectedColor)?.label || 'Select color'}</span>
                         </div>
                         <svg className={`w-4 h-4 text-gray-400 transition-transform ${openColorSelectSingle ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -384,7 +399,7 @@ export default function ProductPage() {
                               }}
                               className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-3 first:rounded-t-lg last:rounded-b-lg"
                             >
-                              <div className={`w-5 h-5 rounded-full border-2 border-gray-200 ${color.class}`}></div>
+                              <ColorSwatch color={color} />
                               <span className="text-sm text-gray-700">{color.label}</span>
                             </button>
                           ))}
@@ -442,7 +457,7 @@ export default function ProductPage() {
                           className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 pl-1 pr-2 bg-white text-left flex items-center justify-between cursor-pointer hover:border-gray-400 transition-colors"
                         >
                           <div className="flex items-center gap-2">
-                            <div className={`w-5 h-5 rounded-full border-2 border-gray-200 ${product.colors.find(c => c.value === selectedColorBogo.ring1)?.class || 'bg-gray-300'}`}></div>
+                            <ColorSwatch color={product.colors.find(c => c.value === selectedColorBogo.ring1)} />
                             <span className="text-gray-700">{product.colors.find(c => c.value === selectedColorBogo.ring1)?.label || 'Select color'}</span>
                           </div>
                           <svg className={`w-4 h-4 text-gray-400 transition-transform ${openColorSelect1 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -462,7 +477,7 @@ export default function ProductPage() {
                                 }}
                                 className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-3 first:rounded-t-lg last:rounded-b-lg"
                               >
-                                <div className={`w-5 h-5 rounded-full border-2 border-gray-200 ${color.class}`}></div>
+                                <ColorSwatch color={color} />
                                 <span className="text-sm text-gray-700">{color.label}</span>
                               </button>
                             ))}
@@ -480,7 +495,7 @@ export default function ProductPage() {
                           className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 pl-1 pr-2 bg-white text-left flex items-center justify-between cursor-pointer hover:border-gray-400 transition-colors"
                         >
                           <div className="flex items-center gap-2">
-                            <div className={`w-5 h-5 rounded-full border-2 border-gray-200 ${product.colors.find(c => c.value === selectedColorBogo.ring2)?.class || 'bg-gray-300'}`}></div>
+                            <ColorSwatch color={product.colors.find(c => c.value === selectedColorBogo.ring2)} />
                             <span className="text-gray-700">{product.colors.find(c => c.value === selectedColorBogo.ring2)?.label || 'Select color'}</span>
                           </div>
                           <svg className={`w-4 h-4 text-gray-400 transition-transform ${openColorSelect2 ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -500,7 +515,7 @@ export default function ProductPage() {
                                 }}
                                 className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-3 first:rounded-t-lg last:rounded-b-lg"
                               >
-                                <div className={`w-5 h-5 rounded-full border-2 border-gray-200 ${color.class}`}></div>
+                                <ColorSwatch color={color} />
                                 <span className="text-sm text-gray-700">{color.label}</span>
                               </button>
                             ))}
