@@ -1,17 +1,46 @@
 'use client'
 
+import { useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useCart()
-  const router = useRouter()
+  const [isRedirecting, setIsRedirecting] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shipping = subtotal > 50 ? 0 : 5.99
   const tax = subtotal * 0.08
   const total = subtotal + shipping + tax
+
+  const handleProceedToCheckout = async () => {
+    setIsRedirecting(true)
+    setCheckoutError(null)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            color: item.color,
+            image: item.image,
+          })),
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Checkout failed')
+      if (data.url) window.location.href = data.url
+      else throw new Error('No checkout URL returned')
+    } catch (e) {
+      setCheckoutError(e instanceof Error ? e.message : 'Something went wrong')
+      setIsRedirecting(false)
+    }
+  }
 
   if (cart.length === 0) {
     return (
@@ -128,11 +157,16 @@ export default function CartPage() {
               </p>
             )}
 
+            {checkoutError && (
+              <p className="text-red-600 text-sm mb-4" role="alert">{checkoutError}</p>
+            )}
+
             <button
-              onClick={() => router.push('/checkout')}
-              className="w-full bg-primary-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors mb-4"
+              onClick={handleProceedToCheckout}
+              disabled={isRedirecting}
+              className="w-full bg-primary-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Proceed to Checkout
+              {isRedirecting ? 'Redirecting...' : 'Proceed to Checkout'}
             </button>
 
             <Link

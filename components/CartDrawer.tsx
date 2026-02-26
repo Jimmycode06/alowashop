@@ -1,8 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -11,13 +11,41 @@ interface CartDrawerProps {
 
 export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { cart, removeFromCart, updateQuantity } = useCart()
-  const router = useRouter()
+  const [isRedirecting, setIsRedirecting] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-  const handleCheckout = () => {
-    onClose()
-    router.push('/checkout')
+  const handleCheckout = async () => {
+    setIsRedirecting(true)
+    setCheckoutError(null)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            color: item.color,
+            image: item.image,
+          })),
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Checkout failed')
+      if (data.url) {
+        onClose()
+        window.location.href = data.url
+      } else {
+        throw new Error('No checkout URL returned')
+      }
+    } catch (e) {
+      setCheckoutError(e instanceof Error ? e.message : 'Something went wrong')
+      setIsRedirecting(false)
+    }
   }
 
   return (
@@ -144,11 +172,16 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 </div>
               </div>
 
+              {checkoutError && (
+                <p className="text-red-600 text-xs mb-3" role="alert">{checkoutError}</p>
+              )}
+
               <button
                 onClick={handleCheckout}
-                className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors mb-3"
+                disabled={isRedirecting}
+                className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors mb-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Proceed to Checkout
+                {isRedirecting ? 'Redirecting...' : 'Proceed to Checkout'}
               </button>
 
               <Link
