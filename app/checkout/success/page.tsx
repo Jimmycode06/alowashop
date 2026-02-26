@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useCart } from '@/contexts/CartContext'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { useCart } from '@/contexts/CartContext'
 import { trackPurchase } from '@/lib/meta-pixel'
 
-export default function CheckoutSuccessPage() {
+function SuccessContent() {
   const { clearCart } = useCart()
   const searchParams = useSearchParams()
 
@@ -26,7 +26,6 @@ export default function CheckoutSuccessPage() {
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-16">
       <div className="max-w-lg w-full text-center">
-        {/* Success icon with animation */}
         <div className="mb-8 inline-flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg shadow-green-200 animate-scale-in">
           <svg className="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -63,5 +62,17 @@ export default function CheckoutSuccessPage() {
         </Link>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <div className="animate-pulse text-gray-500">Loading...</div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }
