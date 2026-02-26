@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
+import { trackInitiateCheckout } from '@/lib/meta-pixel'
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity } = useCart()
@@ -17,6 +18,7 @@ export default function CartPage() {
   const handleProceedToCheckout = async () => {
     setIsRedirecting(true)
     setCheckoutError(null)
+    trackInitiateCheckout({ value: total, currency: 'USD', numItems: cart.length })
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',

@@ -3,13 +3,25 @@
 import Link from 'next/link'
 import { useCart } from '@/contexts/CartContext'
 import { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { trackPurchase } from '@/lib/meta-pixel'
 
 export default function CheckoutSuccessPage() {
   const { clearCart } = useCart()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     clearCart()
   }, [clearCart])
+
+  useEffect(() => {
+    const value = searchParams.get('value')
+    const currency = searchParams.get('currency') || 'USD'
+    if (value) {
+      const numValue = parseFloat(value)
+      if (!Number.isNaN(numValue)) trackPurchase({ value: numValue, currency })
+    }
+  }, [searchParams])
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-16">

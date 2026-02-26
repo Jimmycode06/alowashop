@@ -49,11 +49,13 @@ export async function POST(req: NextRequest) {
       ? { ring1_color: items[0]?.color ?? '', ring2_color: items[1]?.color ?? '' }
       : { color: items[0]?.color ?? '' }
 
+    const totalValue = items.reduce((sum, i) => sum + i.price * i.quantity, 0)
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
       metadata,
-      success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&value=${totalValue.toFixed(2)}&currency=${currency}`,
       cancel_url: `${baseUrl}/cart`,
       shipping_address_collection: {
         allowed_countries: ['US', 'CA', 'GB', 'AU', 'FR', 'DE', 'ES', 'IT', 'BE', 'NL', 'AT', 'IE', 'PT', 'CH'],

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useCart } from '@/contexts/CartContext'
 import PaymentLogo from '@/components/PaymentLogo'
 import ScrollingBanner from '@/components/ScrollingBanner'
+import { trackAddToCart, trackViewContent } from '@/lib/meta-pixel'
 
 type BundleOption = 'single' | 'bogo'
 
@@ -126,6 +127,15 @@ export default function ProductPage() {
     },
   }
 
+  useEffect(() => {
+    trackViewContent({
+      contentIds: [product.id],
+      contentName: product.name,
+      contentType: 'product',
+      value: product.singlePrice,
+    })
+  }, [])
+
   // Pastille couleur : image si définie (ex: /images/colors/gold.png), sinon dégradé CSS
   const ColorSwatch = ({ color, sizeClass = 'w-5 h-5' }: { color: { class: string; image?: string } | undefined; sizeClass?: string }) => {
     if (!color) return <div className={`${sizeClass} rounded-full border-2 border-gray-200 flex-shrink-0 bg-gray-300`} />
@@ -184,6 +194,12 @@ export default function ProductPage() {
         color: selectedColorBogo.ring2,
         image: getImageForColor(selectedColorBogo.ring2),
       })
+      trackAddToCart({
+        value: product.singlePrice,
+        currency: 'USD',
+        contentIds: [product.id],
+        contentType: 'product',
+      })
     } else {
       addToCart({
         id: product.id,
@@ -192,6 +208,12 @@ export default function ProductPage() {
         quantity: 1,
         color: selectedColor,
         image: getImageForColor(selectedColor),
+      })
+      trackAddToCart({
+        value: product.singlePrice,
+        currency: 'USD',
+        contentIds: [product.id],
+        contentType: 'product',
       })
     }
     // Open the cart drawer
