@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
 
 export interface CartItem {
   id: string
@@ -77,9 +77,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     )
   }
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCart([])
-  }
+  }, [])
 
   return (
     <CartContext.Provider

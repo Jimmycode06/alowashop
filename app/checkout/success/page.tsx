@@ -12,22 +12,44 @@ export default function CheckoutSuccessPage() {
   }, [clearCart])
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-16 text-center">
-      <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-        <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-16">
+      <div className="max-w-lg w-full text-center">
+        {/* Success icon with animation */}
+        <div className="mb-8 inline-flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg shadow-green-200 animate-scale-in">
+          <svg className="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <h1 className="text-3xl sm:text-4xl font-display font-normal text-gray-900 mb-3 tracking-wide">
+          Thank you for your order
+        </h1>
+        <p className="text-gray-600 mb-10 text-lg">
+          Your payment was successful. You will receive a confirmation email from Stripe shortly.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link
+            href="/product"
+            className="inline-flex items-center justify-center bg-gray-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            Continue shopping
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-gray-900 hover:text-gray-900 transition-all duration-300"
+          >
+            Back to home
+          </Link>
+        </div>
+
+        <Link
+          href="/"
+          className="mt-16 inline-block text-3xl font-display font-normal tracking-wider text-gray-900 hover:opacity-70 transition-opacity duration-300"
+        >
+          ALOWA
+        </Link>
       </div>
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Thank you for your order</h1>
-      <p className="text-gray-600 mb-8">
-        Your payment was successful. You will receive a confirmation email from Stripe shortly.
-      </p>
-      <Link
-        href="/product"
-        className="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
-      >
-        Continue shopping
-      </Link>
     </div>
   )
 }
