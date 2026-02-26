@@ -9,7 +9,6 @@ import ScrollingBanner from '@/components/ScrollingBanner'
 type BundleOption = 'single' | 'bogo'
 
 export default function ProductPage() {
-  const [quantity, setQuantity] = useState(1)
   const [selectedColor, setSelectedColor] = useState('gold')
   const [selectedColorBogo, setSelectedColorBogo] = useState({ ring1: 'gold', ring2: 'gold' })
   const [bundleOption, setBundleOption] = useState<BundleOption>('bogo')
@@ -152,7 +151,7 @@ export default function ProductPage() {
     if (bundleOption === 'bogo') {
       return product.singlePrice // Price for 2 rings
     }
-    return product.singlePrice * quantity
+    return product.singlePrice // 1 ring only
   }
 
   // Image du ring selon la couleur (pour panier / checkout)
@@ -186,22 +185,21 @@ export default function ProductPage() {
         image: getImageForColor(selectedColorBogo.ring2),
       })
     } else {
-      for (let i = 0; i < quantity; i++) {
-        addToCart({
-          id: product.id,
-          name: product.name,
-          price: product.singlePrice,
-          quantity: 1,
-          color: selectedColor,
-          image: getImageForColor(selectedColor),
-        })
-      }
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.singlePrice,
+        quantity: 1,
+        color: selectedColor,
+        image: getImageForColor(selectedColor),
+      })
     }
     // Open the cart drawer
     setIsCartOpen(true)
   }
 
   return (
+    <>
     <div className="max-w-7xl mx-auto px-4 py-12 overflow-x-hidden">
       <div className="grid md:grid-cols-2 gap-8 md:gap-16 animate-fade-in">
         {/* Product Image */}
@@ -529,34 +527,6 @@ export default function ProductPage() {
             </div>
           </div>
 
-          {/* Quantity Selection (only for single) */}
-          {bundleOption === 'single' && (
-            <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-900 mb-3">
-                Quantity
-              </label>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-10 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-primary-600 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                  </svg>
-                </button>
-                <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-primary-600 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* Add to Cart Section */}
           <div className="mb-6">
             <button
@@ -565,7 +535,7 @@ export default function ProductPage() {
             >
               <span>ADD TO CART</span>
               <div className="flex items-center gap-3">
-                <span className="text-gray-400 line-through text-sm">${bundleOption === 'bogo' ? (product.singlePrice * 2).toFixed(2) : (product.originalPrice * quantity).toFixed(2)}</span>
+                <span className="text-gray-400 line-through text-sm">${bundleOption === 'bogo' ? (product.singlePrice * 2).toFixed(2) : product.originalPrice.toFixed(2)}</span>
                 <span className="text-xl sm:text-2xl font-bold">${getTotalPrice().toFixed(2)}</span>
               </div>
             </button>
@@ -685,10 +655,10 @@ export default function ProductPage() {
               { q: 'How long should I wear the ring?', a: 'You can wear the ALOWA ring all day long for continuous benefits. Many users find it comfortable to wear 24/7, but you can also wear it during specific times when you need pain relief.' },
             ] :
             [
-              { q: 'How long does shipping take?', a: 'All orders are processed within 1-2 business days. US orders typically arrive in 4-7 business days with free shipping. International orders take 5-9 business days.' },
-              { q: 'Do you offer free shipping?', a: 'Yes! We offer free shipping on all orders within the United States. International shipping rates apply for orders outside the US.' },
-              { q: 'What is your return policy?', a: 'We offer a 30-day money-back guarantee. If you\'re not satisfied with your purchase, you can return it within 30 days for a full refund.' },
-              { q: 'How do I track my order?', a: 'Once your order ships, you\'ll receive a tracking number via email. You can use this to track your package\'s journey to your doorstep.' },
+              { q: 'How long does processing and delivery take?', a: 'Orders are typically processed within 1–3 business days. During high demand or promotions, processing may extend up to 7–10 business days. Estimated delivery is generally 5–10 business days depending on destination and carrier. Final delivery timelines are shown at checkout.' },
+              { q: 'Can there be shipping delays?', a: 'Due to global demand and logistics constraints, occasional delays may occur. We appreciate your patience while our fulfillment partners work to deliver your order on time.' },
+              { q: 'Which countries do you ship to?', a: 'We ship to approved service regions including the United States, Canada, the United Kingdom, Australia, and other supported international markets. Orders to restricted territories may be declined. Full details are on our Shipping & Delivery page.' },
+              { q: 'Are delivery times guaranteed?', a: 'Shipping times are estimates only and may vary due to carrier operations, customs, or other unforeseen circumstances. They exclude weekends and public holidays.' },
             ]
           ).map((faq, index) => (
             <div
@@ -722,12 +692,14 @@ export default function ProductPage() {
           ))}
         </div>
       </div>
+      </div>
 
-      {/* Scrolling Banner */}
-      <div className="mt-16 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+      {/* Scrolling Banner — pleine largeur, hors du conteneur max-w */}
+      <div className="mt-16 w-full">
         <ScrollingBanner />
       </div>
 
+      <div className="max-w-7xl mx-auto px-4 overflow-x-hidden">
       {/* Comparison Table */}
       <div className="mt-16 max-w-5xl mx-auto px-4">
         <div className="text-center mb-8">
@@ -958,5 +930,6 @@ export default function ProductPage() {
         </div>
       )}
     </div>
+    </>
   )
 }

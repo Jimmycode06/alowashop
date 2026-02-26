@@ -2,7 +2,7 @@
 
 export default function ScrollingBanner() {
   return (
-    <div className="bg-black text-white py-2 overflow-hidden relative">
+    <div className="w-full min-w-full bg-black text-white py-2 overflow-hidden relative">
       <div className="flex animate-scroll whitespace-nowrap">
         {/* Repeat the content multiple times for seamless scrolling */}
         {[...Array(6)].map((_, i) => (

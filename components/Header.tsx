@@ -24,7 +24,7 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link href="/product" className="text-gray-700 hover:text-primary-600 transition-colors font-medium relative group">
-              Product
+              Alowa Ring
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 group-hover:w-full transition-all duration-300"></span>
             </Link>
           </nav>
@@ -83,7 +83,7 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
                 className="text-gray-700 hover:text-primary-600 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-gray-50"
               >
-                Product
+                Alowa Ring
               </Link>
             </div>
           </nav>
