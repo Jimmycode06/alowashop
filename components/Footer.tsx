@@ -45,13 +45,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
+                <a href="mailto:support@wearealowa.com" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
                   Returns
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
-                  Contact Us
+                <a href="mailto:support@wearealowa.com" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block break-all">
+                  support@wearealowa.com
                 </a>
               </li>
             </ul>
@@ -77,6 +77,9 @@ export default function Footer() {
         <div className="border-t border-gray-700/50 mt-12 pt-8 text-center">
           <p className="text-sm text-gray-400">
             &copy; {new Date().getFullYear()} <span className="text-primary-400 font-semibold">ALOWA</span>. All rights reserved.
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            Support: <a href="mailto:support@wearealowa.com" className="text-primary-400 hover:underline">support@wearealowa.com</a>
           </p>
         </div>
       </div>

@@ -52,6 +52,13 @@ export default function ShippingDeliveryPage() {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Important Notice</h2>
           <p>Shipping times represent estimated delivery windows only and may vary depending on carrier operations, customs processing, or unforeseen logistical circumstances.</p>
         </section>
+
+        <hr className="border-gray-200" />
+
+        <section>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Questions?</h2>
+          <p>For any questions about shipping or delivery, contact us at <a href="mailto:support@wearealowa.com" className="text-primary-600 hover:underline">support@wearealowa.com</a>.</p>
+        </section>
       </div>
     </div>
   )

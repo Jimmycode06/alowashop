@@ -38,6 +38,9 @@ function SuccessContent() {
         <p className="text-gray-600 mb-10 text-lg">
           Your payment was successful. You will receive a confirmation email from Stripe shortly.
         </p>
+        <p className="text-sm text-gray-500 mb-8">
+          Questions? Contact us at <a href="mailto:support@wearealowa.com" className="text-primary-600 hover:underline">support@wearealowa.com</a>
+        </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link

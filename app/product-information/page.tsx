@@ -60,6 +60,13 @@ export default function ProductInformationPage() {
           <h2 className="text-xl font-semibold text-gray-900 mb-3">5. Responsible Communication</h2>
           <p>ALOWA communicates its products within the scope of general wellness and lifestyle support. No medical or therapeutic claims are made, and our products are intended to complement — not replace — professional medical advice or treatment.</p>
         </section>
+
+        <hr className="border-gray-200" />
+
+        <section>
+          <h2 className="text-xl font-semibold text-gray-900 mb-3">Contact</h2>
+          <p>For questions about our products or this information, contact us at <a href="mailto:support@wearealowa.com" className="text-primary-600 hover:underline">support@wearealowa.com</a>.</p>
+        </section>
       </div>
     </div>
   )

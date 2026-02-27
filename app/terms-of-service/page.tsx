@@ -49,7 +49,7 @@ export default function TermsOfServicePage() {
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">5. Returns & Refunds</h2>
-          <p>Returns and refunds are handled in accordance with our return policy. Please refer to the relevant section on our website or contact our support team for details.</p>
+          <p>Returns and refunds are handled in accordance with our return policy. Please refer to the relevant section on our website or contact our support team at <a href="mailto:support@wearealowa.com" className="text-primary-600 hover:underline">support@wearealowa.com</a> for details.</p>
         </section>
 
         <hr className="border-gray-200" />
@@ -77,7 +77,7 @@ export default function TermsOfServicePage() {
 
         <section>
           <h2 className="text-xl font-semibold text-gray-900 mb-3">9. Contact</h2>
-          <p>For questions regarding these Terms of Service, please contact us through the contact options provided on our website. The ALOWA trademark is operated by a European-based entity.</p>
+          <p>For questions regarding these Terms of Service, please contact us at <a href="mailto:support@wearealowa.com" className="text-primary-600 hover:underline">support@wearealowa.com</a>. The ALOWA trademark is operated by a European-based entity.</p>
         </section>
       </div>
     </div>
