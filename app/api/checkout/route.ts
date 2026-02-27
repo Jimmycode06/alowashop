@@ -23,8 +23,9 @@ function getImagePathForColor(color?: string): string {
 }
 
 function getServerPrice(id: string): number | null {
-  for (const [key, price] of Object.entries(PRODUCT_CATALOG)) {
-    if (id === key || id.startsWith(key)) return price
+  // Exact match first so "magnetic-ring-001-bogo-2-free" gets 0, not 49.9
+  if (Object.prototype.hasOwnProperty.call(PRODUCT_CATALOG, id)) {
+    return PRODUCT_CATALOG[id]
   }
   if (id.includes('bogo') && id.includes('free')) return 0
   if (id.includes('bogo')) return 49.9
