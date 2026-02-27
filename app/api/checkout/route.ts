@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
       metadata,
       success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&value=${totalValue.toFixed(2)}&currency=${currency}`,
       cancel_url: `${baseUrl}/cart`,
+      allow_promotion_codes: true,
       shipping_address_collection: {
         allowed_countries: ['US', 'CA', 'GB', 'AU', 'FR', 'DE', 'ES', 'IT', 'BE', 'NL', 'AT', 'IE', 'PT', 'CH'],
       },
