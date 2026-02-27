@@ -6,6 +6,7 @@ import { CartProvider } from '@/contexts/CartContext'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CartDrawerWrapper from '@/components/CartDrawerWrapper'
+import PromoBanner from '@/components/PromoBanner'
 
 const cormorant = Cormorant_Garamond({ 
   subsets: ['latin'],
@@ -60,6 +61,7 @@ fbq('track', 'PageView');`}
           />
         </noscript>
         <CartProvider>
+          <PromoBanner />
           <Header />
           <main className="min-h-screen overflow-x-hidden">
             {children}
