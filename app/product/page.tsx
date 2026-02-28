@@ -84,6 +84,7 @@ export default function ProductPage() {
     '/images/ring-7.png',
     '/images/ring-2.png',
     '/images/ring-3.png',
+    '/images/ring-8.png',
     '/images/ring-4.png',
     '/images/ring-5.png',
     '/images/ring-6.png',
@@ -563,10 +564,10 @@ export default function ProductPage() {
             </button>
             
             {/* Payment Methods */}
-            <div className="mb-6 overflow-x-hidden">
-              <div className="flex items-center justify-center gap-1 sm:-space-x-8 sm:gap-0 flex-wrap">
+            <div className="mb-6 overflow-x-auto overflow-y-hidden">
+              <div className="flex items-center justify-center gap-0.5 sm:gap-0 sm:-space-x-8 flex-nowrap min-w-0">
                 {['Visa', 'Mastercard', 'PayPal', 'ApplePay', 'GooglePay'].map((payment) => (
-                  <PaymentLogo key={payment} name={payment} />
+                  <PaymentLogo key={payment} name={payment} className="flex-shrink-0" />
                 ))}
               </div>
             </div>
@@ -673,7 +674,6 @@ export default function ProductPage() {
             faqCategory === 'product' ? [
               { q: 'What materials are used in the ALOWA ring?', a: 'The ALOWA ring is made from premium stainless steel with therapeutic-grade neodymium magnets. The stainless steel construction is hypoallergenic, lightweight, and durable.' },
               { q: 'How do I adjust the ring size?', a: 'The ALOWA ring is designed to be adjustable and fits all finger sizes. Simply bend the ring gently to fit your finger comfortably. It\'s suitable for both men and women.' },
-              { q: 'Can I wear the ring while swimming or showering?', a: 'Yes! The ALOWA ring is water-resistant and can be worn during daily activities including swimming and showering. However, we recommend removing it during intense physical activities to prevent damage.' },
               { q: 'How long should I wear the ring?', a: 'You can wear the ALOWA ring all day long for continuous benefits. Many users find it comfortable to wear 24/7, but you can also wear it during specific times when you need pain relief.' },
             ] :
             [
@@ -822,6 +822,7 @@ export default function ProductPage() {
               comment: 'Nice design, very discreet. Helps with circulation.',
               color: 'Onyx',
               image: '',
+              lifestyleImage: '/images/avis3.png',
             },
             {
               name: 'Sophie K.',

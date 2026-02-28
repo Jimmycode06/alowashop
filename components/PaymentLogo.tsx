@@ -31,9 +31,8 @@ export default function PaymentLogo({ name, className = '' }: PaymentLogoProps) 
 
   // If both images fail, show fallback SVG
   if (imageError && pngError) {
-    // All logos fallback - no background, no border
     return (
-      <div className={`w-24 h-12 flex items-center justify-center ${className}`}>
+      <div className={`w-14 h-7 sm:w-24 sm:h-12 flex items-center justify-center flex-shrink-0 ${className}`}>
         {isApplePay && (
           <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor">
             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
@@ -74,9 +73,9 @@ export default function PaymentLogo({ name, className = '' }: PaymentLogoProps) 
   }
 
   // All payment logos now have the same styling - no background, no border
-  // All logos same size for consistent spacing
+  // Smaller on mobile so they fit on one line; normal size from sm up
   return (
-    <div className={`w-24 h-12 flex items-center justify-center ${className}`}>
+    <div className={`w-14 h-7 sm:w-24 sm:h-12 flex items-center justify-center flex-shrink-0 ${className}`}>
       {!imageError ? (
         <Image
           src={imagePath}
