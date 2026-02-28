@@ -820,7 +820,7 @@ export default function ProductPage() {
               date: '23/01/2025',
               rating: 4,
               comment: 'Nice design, very discreet. Helps with circulation.',
-              color: 'Onyx',
+              color: 'Rose Gold',
               image: '',
               lifestyleImage: '/images/avis3.png',
             },
