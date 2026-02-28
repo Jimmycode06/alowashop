@@ -45,9 +45,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:support@wearealowa.com" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
+                <Link href="/returns" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block">
                   Returns
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="mailto:support@wearealowa.com" className="hover:text-primary-400 transition-colors duration-300 hover:translate-x-1 inline-block break-all">
